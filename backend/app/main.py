@@ -20,9 +20,9 @@ def generate_pastpaper():
 
     topic_df = df[df['topic'].isin(topic_list)]
 
-    component2 = topic_df[topic_df['comment' == 2]]
-    component4 = topic_df[topic_df['comment' == 4]]
-    component6 = topic_df[topic_df['comment' == 6]]
+    component2 = topic_df[topic_df['component'] == 2]
+    component4 = topic_df[topic_df['component'] == 4]
+    component6 = topic_df[topic_df['component']== 6]
     
     images = {
         'component2':component2['screenshot_path'].to_list(),
