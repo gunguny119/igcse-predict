@@ -6,8 +6,9 @@ import pandas as pd
 app = Flask(__name__)  #opening up app
 CORS(app)
 
+cur_path = os.path.dirname(__file__)
 #load data
-df = pd.read_csv('../data/data.csv')
+df = pd.read_csv(f'{cur_path}/../data/data.csv')
 
 #https://www, if we have /generate, send our data to the url
 APP_ROOT = os.getenv('APP_ROOT', '/generate')
