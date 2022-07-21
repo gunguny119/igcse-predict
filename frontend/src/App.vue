@@ -61,7 +61,7 @@ export default {
       this.sendRequest();
     },
     sendRequest: async function () {
-      const response = await fetch("http://127.0.0.1:5000/generate", {
+      const response = await fetch("https://igcse-predict.herokuapp.com/generate", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
