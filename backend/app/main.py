@@ -21,23 +21,23 @@ def generate_pastpaper():
     topic_df = df[df['topic'].isin(topic_list)]
 
     componenet2 = topic_df[topic_df['comment' == 2]]
-    componenet4 = topic_df[topic_df['comment' == 2]]
-    componenet6 = topic_df[topic_df['comment' == 2]]
+    componenet4 = topic_df[topic_df['comment' == 4]]
+    componenet6 = topic_df[topic_df['comment' == 6]]
     
     images = {
-        'component2'['screenshot_path'].to_list(),
-        'component4'['screenshot_path'].to_list(),
-        'component6'['screenshot_path'].to_list()
+        'component2':['screenshot_path'].to_list(),
+        'component4':['screenshot_path'].to_list(),
+        'component6':['screenshot_path'].to_list()
 
     }
 
     
 
 
-    sampled = random.sample(topic_list, len(topic_list)-1)
+    
 
 
 
 
     
-    return {'topics':  sampled}
+    return images
