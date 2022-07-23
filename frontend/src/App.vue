@@ -2,10 +2,11 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import vSelect from "vue-select";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 </script>
 
 <template>
-  <div v-show="!clicked">
+  <div v-show="!clicked && !got_response">
     <h1>IGCSE Chemistry</h1>
     <h2>Select your studied topics:</h2>
     <v-select
@@ -20,6 +21,12 @@ import vSelect from "vue-select";
   </div>
 
   <div v-show="clicked">
+    <h1>Generating Paper...</h1>
+    <pulse-loader color = "green"></pulse-loader>
+
+  </div>
+
+  <div v-show="got_response">
     <h1>Server Response</h1>
     <p>component2 : {{ component2 }}</p>
     <p>component4 : {{ component4 }}</p>
@@ -35,6 +42,7 @@ export default {
     return {
       clicked: false,
       show_error_msg : false,
+      got_response: false,
       selected_topics: [],
       topic_list: [
         "1 The particulate nature of matter",
@@ -66,6 +74,7 @@ export default {
       else{
         this.clicked = true;
         this.sendRequest();
+       
       }
 
     },
@@ -82,9 +91,18 @@ export default {
       this.component2 = data.component2;
       this.component4 = data.component4;
       this.component6 = data.component6;
+
+      this.got_response = true;
+      this.clicked = false;
+
     },
     reset() {
       this.clicked = false;
+      this.got_response = false;
+      this.component2 = [];
+      this.component4 = [];
+      this.component6 = [];
+      this.selected_topics = [];
     },
   },
 };
