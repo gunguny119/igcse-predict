@@ -7,19 +7,20 @@ import vSelect from "vue-select";
 <template>
   <div v-show="!clicked">
     <h1>IGCSE Chemistry</h1>
-    <h2>Select your studied topcis:</h2>
+    <h2>Select your studied topics:</h2>
     <v-select
       v-model="selected_topics"
       multiple
       :options="topic_list"
     ></v-select>
+    <p v-show = "show_error_msg" style = "color : red">Please select one or more topics.</p>
     <button class="generate-button" @click="onGeneratePaper">
       Generate Paper
     </button>
   </div>
 
   <div v-show="clicked">
-    <h1>Server Respone</h1>
+    <h1>Server Response</h1>
     <p>component2 : {{ component2 }}</p>
     <p>component4 : {{ component4 }}</p>
     <p>component6 : {{ component6 }}</p>
@@ -33,6 +34,7 @@ export default {
   data() {
     return {
       clicked: false,
+      show_error_msg : false,
       selected_topics: [],
       topic_list: [
         "1 The particulate nature of matter",
@@ -57,8 +59,15 @@ export default {
   },
   methods: {
     onGeneratePaper() {
-      this.clicked = true;
-      this.sendRequest();
+
+      if(this.selected_topics.length == 0){
+        this.show_error_msg = true;
+      }
+      else{
+        this.clicked = true;
+        this.sendRequest();
+      }
+
     },
     sendRequest: async function () {
       const response = await fetch("https://igcse-predict.herokuapp.com/generate", {
