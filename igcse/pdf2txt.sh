@@ -1,4 +1,4 @@
- for i in 21; do
+ for i in {10..21}; do
     for season in m s w; do
         for component in 2 4 6; do
             for alt in 1 2 3; do
