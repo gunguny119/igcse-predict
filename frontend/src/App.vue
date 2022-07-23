@@ -14,7 +14,9 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
       multiple
       :options="topic_list"
     ></v-select>
-    <p v-show = "show_error_msg" style = "color : red">Please select one or more topics.</p>
+    <p v-show="show_error_msg" style="color: red">
+      Please select one or more topics.
+    </p>
     <button class="generate-button" @click="onGeneratePaper">
       Generate Paper
     </button>
@@ -22,8 +24,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
   <div v-show="clicked">
     <h1>Generating Paper...</h1>
-    <pulse-loader color = "green"></pulse-loader>
-
+    <pulse-loader color="green"></pulse-loader>
   </div>
 
   <div v-show="got_response">
@@ -41,7 +42,7 @@ export default {
   data() {
     return {
       clicked: false,
-      show_error_msg : false,
+      show_error_msg: false,
       got_response: false,
       selected_topics: [],
       topic_list: [
@@ -67,25 +68,24 @@ export default {
   },
   methods: {
     onGeneratePaper() {
-
-      if(this.selected_topics.length == 0){
+      if (this.selected_topics.length == 0) {
         this.show_error_msg = true;
-      }
-      else{
+      } else {
         this.clicked = true;
         this.sendRequest();
-       
       }
-
     },
     sendRequest: async function () {
-      const response = await fetch("https://igcse-predict.herokuapp.com/generate", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ topics: this.selected_topics }),
-      });
+      const response = await fetch(
+        "https://igcse-predict.herokuapp.com/generate",
+        {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ topics: this.selected_topics }),
+        }
+      );
 
       const data = await response.json();
       this.component2 = data.component2;
@@ -94,7 +94,6 @@ export default {
 
       this.got_response = true;
       this.clicked = false;
-
     },
     reset() {
       this.clicked = false;
