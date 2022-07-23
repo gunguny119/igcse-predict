@@ -25,6 +25,7 @@ dist-ssr
 __pycache__/
 igcse/pastpapers/
 igcse/extras/
+screenshots/
 
 # Logs
 logs
