@@ -49,12 +49,12 @@ def main():
     month_map = {'m': 'march', 's': 'summer', 'w': 'winter'}
     data = []
     for year in range(2016, 2022):
-        for qp in os.listdir(str(year)):
+        for qp in os.listdir(f'pastpapers/{year}'):
             if not qp.endswith('txt'):
                 continue
             if not 'qp_2' in qp:
                 continue
-            fname = f'{year}/{qp}'
+            fname = f'pastpapers/{year}/{qp}'
 
             names = qp.replace('.txt', '')
             _, month, _, component = names.split('_')
@@ -66,7 +66,7 @@ def main():
 
             question_numbers = [int(q.split(' ')[0]) for q in questions]
             screenshot_paths = [
-                f'{year}/{month_map[month[0]]}/component{component[0]}/q{n}.png'
+                f'{year}/{month_map[month[0]]}/component{component}/q{n}.png'
                 for n in question_numbers
             ]
             data.append(
