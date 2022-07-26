@@ -29,10 +29,18 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
   <div v-show="got_response">
     <h1>Server Response</h1>
-    <p>component2 : {{ component2 }}</p>
-    <p>component4 : {{ component4 }}</p>
-    <p>component6 : {{ component6 }}</p>
-    <button class="generate-button" @click="reset">Retry</button>
+    <button class="generate-button">
+      <a :href="component2" target="_blank">component2</a>
+    </button>
+    <button class="generate-button">
+      <a :href="component4" target="_blank">component4</a>
+    </button>
+    <button class="generate-button">
+      <a :href="component6" target="_blank">component6</a>
+    </button>
+    <div style="margin-top: 50px">
+      <button class="generate-button" @click="reset">Retry</button>
+    </div>
   </div>
 </template>
 

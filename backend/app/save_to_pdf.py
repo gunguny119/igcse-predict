@@ -10,8 +10,9 @@ def process_pdf(images, bucket, selected_topics, component):
         os.makedirs('generated_papers')
 
     pdf_file_path = f'generated_papers/component{component}_{"-".join(selected_topic_index)}.pdf'
-    download_images(images, bucket)
-    convert_to_pdf(images, pdf_file_path)
+    if not os.path.isfile(pdf_file_path):
+        download_images(images, bucket)
+        convert_to_pdf(images, pdf_file_path)
     upload_pdf(pdf_file_path, bucket)
 
     return pdf_file_path
@@ -42,4 +43,6 @@ def convert_to_pdf(images, pdf_file_path):
     
 def upload_pdf(pdf_file_path, bucket):
     blob = bucket.blob(pdf_file_path)
+    if blob.exists():
+        return
     blob.upload_from_filename(pdf_file_path)
