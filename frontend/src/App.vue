@@ -37,6 +37,9 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 </template>
 
 <script>
+import storage from "./components/load_firebase";
+import { ref, getDownloadURL } from "firebase/storage";
+
 export default {
   name: "App",
   data() {
@@ -61,9 +64,10 @@ export default {
         "13 Carbonates",
         "14 Organic chemistry",
       ],
-      component2: [],
-      component4: [],
-      component6: [],
+      component2: "",
+      component4: "",
+      component6: "",
+      selected_option: ["22", "42", "62"],
     };
   },
   methods: {
@@ -77,30 +81,36 @@ export default {
     },
     sendRequest: async function () {
       const response = await fetch(
-        "https://igcse-predict.herokuapp.com/generate",
+        "https://127.0.0.1:5000/generate",
         {
           method: "post",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ topics: this.selected_topics }),
+          body: JSON.stringify({ topics: this.selected_topics, options: this.selected_option }),
         }
       );
 
       const data = await response.json();
-      this.component2 = data.component2;
-      this.component4 = data.component4;
-      this.component6 = data.component6;
+
+      this.component2 = await this.get_pdf_donwload_url(data.component2);
+      this.component4 = await this.get_pdf_donwload_url(data.component4);
+      this.component6 = await this.get_pdf_donwload_url(data.component6);
 
       this.got_response = true;
       this.clicked = false;
     },
+    get_pdf_download_url: async function(pdf_path){
+      const pdfReference = ref(storage, pdf_path);
+      const pdfURL = await getDownloadURL(pdfReference);
+      return pdfURL
+    },
     reset() {
       this.clicked = false;
       this.got_response = false;
-      this.component2 = [];
-      this.component4 = [];
-      this.component6 = [];
+      this.component2 = "";
+      this.component4 = "";
+      this.component6 = "";
       this.selected_topics = [];
     },
   },
