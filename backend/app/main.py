@@ -28,7 +28,7 @@ APP_ROOT = os.getenv('APP_ROOT', '/generate')
 def generate_pastpaper():
     data = request.json
     topic_list = data.get('topics')
-    options = data.get('options') # 21, 41, 61...
+    options = data.get('options')  # 21, 41, 61...
 
     topic_df = df[df['topic'].isin(topic_list)]
 
@@ -48,9 +48,9 @@ def generate_pastpaper():
         'component6': ['screenshots/2010/march/component2/q1.png'],
     }
 
-    component2_pdf =  process_pdf(images['component2'],bucket, topic_list,options[0])
-    component4_pdf =  process_pdf(images['component4'],bucket, topic_list,options[1])
-    component6_pdf =  process_pdf(images['component6'],bucket, topic_list,options[2])
+    component2_pdf = process_pdf(images['component2'], bucket, topic_list, options[0])
+    component4_pdf = process_pdf(images['component4'], bucket, topic_list, options[1])
+    component6_pdf = process_pdf(images['component6'], bucket, topic_list, options[2])
 
     pdfs = {
         'component2': component2_pdf,
