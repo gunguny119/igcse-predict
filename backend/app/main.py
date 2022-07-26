@@ -52,4 +52,4 @@ def generate_pastpaper():
         'component6': component6_pdf,
     }
 
-    return images
+    return pdfs
