@@ -66,7 +66,7 @@ def main():
 
             question_numbers = [int(q.split(' ')[0]) for q in questions]
             screenshot_paths = [
-                f'{year}/{month_map[month[0]]}/component{component}/q{n}.png'
+                f'{year}/{month_map[month[0]]}/component{component}/q{n}'
                 for n in question_numbers
             ]
             data.append(
