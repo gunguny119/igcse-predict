@@ -2,9 +2,19 @@ import os
 from flask import Flask, request
 from flask_cors import CORS
 import pandas as pd
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import storage
+
+from app.save_to_pdf import process_pdf
 
 app = Flask(__name__)  #opening up app
 CORS(app)
+
+cred = credentials.Certificate('igcse-predict-c18eb87031fd.json')
+firebase_admin.initialize_app(cred, {'storageBucket': 'igcse-predict.appspot.com'})
+
+bucket = storage.bucket()
 
 cur_path = os.path.dirname(__file__)
 #load data
@@ -18,17 +28,28 @@ APP_ROOT = os.getenv('APP_ROOT', '/generate')
 def generate_pastpaper():
     data = request.json
     topic_list = data.get('topics')
+    options = data.get('options') # 21, 41, 61...
 
     topic_df = df[df['topic'].isin(topic_list)]
 
-    component2 = topic_df[topic_df['component'] == 2]
-    component4 = topic_df[topic_df['component'] == 4]
-    component6 = topic_df[topic_df['component'] == 6]
+    component2 = topic_df[topic_df['component'] == options[0]]
+    component4 = topic_df[topic_df['component'] == options[1]]
+    component6 = topic_df[topic_df['component'] == options[2]]
 
     images = {
         'component2': component2['screenshot_path'].to_list(),
         'component4': component4['screenshot_path'].to_list(),
         'component6': component6['screenshot_path'].to_list()
+    }
+
+    component2_pdf =  process_pdf(images['component2'],bucket, topic_list,options[0])
+    component4_pdf =  process_pdf(images['component4'],bucket, topic_list,options[1])
+    component6_pdf =  process_pdf(images['component6'],bucket, topic_list,options[2])
+
+    pdfs = {
+        'component2': component2_pdf,
+        'component4': component4_pdf,
+        'component6': component6_pdf,
     }
 
     return images
