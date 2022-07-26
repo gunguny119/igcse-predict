@@ -26,6 +26,8 @@ __pycache__/
 igcse/pastpapers/
 igcse/extras/
 screenshots/
+marking_schemes/
+generated_papers/
 
 # Logs
 logs
