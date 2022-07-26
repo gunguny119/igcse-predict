@@ -9,7 +9,7 @@ def process_pdf(images, bucket, selected_topics, component):
     if not os.path.isdir('generated_papers'):
         os.makedirs('generated_papers')
 
-    pdf_file_path = f'generated_papers/component{component}_{"-".join(selected_topic_index)}_.pdf'
+    pdf_file_path = f'generated_papers/component{component}_{"-".join(selected_topic_index)}.pdf'
     download_images(images, bucket)
     convert_to_pdf(images, pdf_file_path)
     upload_pdf(pdf_file_path, bucket)
@@ -24,7 +24,7 @@ def download_images(images, bucket):
 
 def convert_to_rgb(img, size = (1654,2339)):
     # default size = A4
-    if len(img.split()==3):
+    if len(img.split()) == 3:
         return img
     rgb = Image.new('RGB', size, (255,255,255))
     rgb.paste(img,mask = img.split()[-1])

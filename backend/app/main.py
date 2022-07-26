@@ -36,10 +36,16 @@ def generate_pastpaper():
     component4 = topic_df[topic_df['component'] == options[1]]
     component6 = topic_df[topic_df['component'] == options[2]]
 
+    # images = {
+    #     'component2': component2['screenshot_path'].to_list(),
+    #     'component4': component4['screenshot_path'].to_list(),
+    #     'component6': component6['screenshot_path'].to_list()
+    # }
+
     images = {
-        'component2': component2['screenshot_path'].to_list(),
-        'component4': component4['screenshot_path'].to_list(),
-        'component6': component6['screenshot_path'].to_list()
+        'component2': ['screenshots/2010/march/component2/q1.png'],
+        'component4': ['screenshots/2010/march/component2/q1.png'],
+        'component6': ['screenshots/2010/march/component2/q1.png'],
     }
 
     component2_pdf =  process_pdf(images['component2'],bucket, topic_list,options[0])
