@@ -36,9 +36,9 @@ def convert_to_pdf(images, pdf_file_path):
     for filename in images:
         image_files.append(convert_to_rgb(Image.open(filename)))
 
-    image_files[0].save(pdf_file_path,'paper.pdf', 'PDF', resolution = 100.0, save_all = True, append_images = image_files[1:])
+    image_files[0].save(pdf_file_path, 'PDF', resolution = 100.0, save_all = True, append_images = image_files[1:])
 
-    return 'paper.pdf'
+    
     
 def upload_pdf(pdf_file_path, bucket):
     blob = bucket.blob(pdf_file_path)
