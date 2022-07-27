@@ -66,7 +66,7 @@ def main():
 
             question_numbers = [int(q.split(' ')[0]) for q in questions]
             screenshot_paths = [
-                f'{year}/{month_map[month[0]]}/component{component}/q{n}'
+                f'screenshots/{year}/{month_map[month[0]]}/component{component}/q{n}'
                 for n in question_numbers
             ]
             data.append(
@@ -80,6 +80,7 @@ def main():
                 }))
 
     df = pd.concat(data)
+    df.sort_values(by=['year', 'month', 'component', 'question number'], inplace=True)
 
     df.to_csv('component2_2016-2021.csv', index=False)
 
