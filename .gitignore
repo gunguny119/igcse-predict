@@ -23,7 +23,7 @@ dist-ssr
 *.sw?
 
 __pycache__/
-igcse/pastpapers/
+pastpapers/
 igcse/extras/
 screenshots/
 marking_schemes/
