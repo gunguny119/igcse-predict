@@ -36,6 +36,21 @@ def generate_pastpaper():
     component4 = topic_df[topic_df['component'] == options[1]]
     component6 = topic_df[topic_df['component'] == options[2]]
 
+    
+    component2_questions = []
+    for i in range(1,41):
+         component2_questions.append(component2[component2['question number'] == i].sample(1))
+
+    component4_questions = []
+    for i in range(1,7):
+         component4_questions.append(component4[component4['question number'] == i].sample(1))
+         
+    component6_questions = []
+    for i in range(1,5):
+         component6_questions.append(component6[component6['question number'] == i].sample(1))
+
+
+
     # images = {
     #     'component2': component2['screenshot_path'].to_list(),
     #     'component4': component4['screenshot_path'].to_list(),
