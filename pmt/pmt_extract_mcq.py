@@ -19,6 +19,23 @@ topic_list = [
     "organic-chemistry",
 ]
 
+topic_map = {
+    "particulate-nature-of-matter": "1 The particulate nature of matter",
+    "experimental-techniques": "2 Experimental techniques",
+    "atoms-elements-compounds": "3 Atoms, elements and compounds",
+    "stoichiometry": "4 Stoichiometry",
+    "electricity-and-chemistry": "5 Electricity and chemistry",
+    "chemical-energetics": "6 Chemical energetics",
+    "chemical-reactions": "7 Chemical reactions",
+    "acids-bases-salts": "8 Acids, bases and salts",
+    "periodic-table": "9 The Periodic Table",
+    "metals": "10 Metals",
+    "air-and-water": "11 Air and water",
+    "sulfur": "12 Sulfur",
+    "carbonates": "13 Carbonates",
+    "organic-chemistry": "14 Organic chemistry",
+}
+
 
 def segment_questions_component2(lines, component, subject):
     q_found = False
@@ -63,10 +80,9 @@ def segment_questions_component2(lines, component, subject):
 
 
 def main():
-    month_map = {'m': 'march', 's': 'summer', 'w': 'winter'}
     data = []
     for t in topic_list:
-        for qp in glob.glob(f'pmt/{t}/*QP.pdf.txt'):
+        for qp in glob.glob(f'pastpapers/{t}/*QP.pdf.txt'):
             if not '(Multiple Choice)' in qp:
                 continue
 
@@ -81,7 +97,7 @@ def main():
                     'component': [21] * len(questions),
                     'question number': question_numbers,
                     'text': questions,
-                    'topic': [t] * len(questions),
+                    'topic': [topic_map[t]] * len(questions),
                 }))
 
     df = pd.concat(data)
