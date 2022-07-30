@@ -11,25 +11,45 @@ def process_pdf(images, bucket, selected_topics, component):
 
     pdf_file_path = f'generated_papers/component{component}_{"-".join(selected_topic_index)}.pdf'
     if not os.path.isfile(pdf_file_path):
-        download_images(images, bucket)
-        convert_to_pdf(images, pdf_file_path)
+        real_files = download_images(images, bucket)
+        convert_to_pdf(real_files, pdf_file_path)
     upload_pdf(pdf_file_path, bucket)
 
     return pdf_file_path
 
-def download_images(images, bucket):
-    for filename in images:
-        blob = bucket.blob(filename)
-        os.makedirs(os.path.dirname(filename), exist_ok = True)
-        blob.download_to_filename(filename)
 
-def convert_to_rgb(img, size = (1654,2339)):
+def download_images(images, bucket):
+    real_files = []
+    for filename in images:  # screenshots/year/month/component/q1
+        if 'component2' in filename:
+            real_file = filename + '.png'
+            blob = bucket.blob(real_file)
+            os.makedirs(os.path.dirname(real_file), exist_ok=True)
+            blob.download_to_filename(real_file)
+            real_files.append(real_file)
+        else:
+            i = 1
+            while True:
+                real_file = f'{filename}_p{i}.png'
+                blob = bucket.blob(real_file)
+                if not blob.exists():
+                    break
+                os.makedirs(os.path.dirname(real_file), exist_ok=True)
+                blob.download_to_filename(real_file)
+                real_files.append(real_file)
+                i += 1
+
+    return real_files
+
+
+def convert_to_rgb(img, size=(1654, 2339)):
     # default size = A4
     if len(img.split()) == 3:
         return img
-    rgb = Image.new('RGB', size, (255,255,255))
-    rgb.paste(img,mask = img.split()[-1])
+    rgb = Image.new('RGB', size, (255, 255, 255))
+    rgb.paste(img, mask=img.split()[-1])
     return rgb
+
 
 def convert_to_pdf(images, pdf_file_path):
     """images: list of str, which has image paths"""
@@ -37,10 +57,13 @@ def convert_to_pdf(images, pdf_file_path):
     for filename in images:
         image_files.append(convert_to_rgb(Image.open(filename)))
 
-    image_files[0].save(pdf_file_path, 'PDF', resolution = 100.0, save_all = True, append_images = image_files[1:])
+    image_files[0].save(pdf_file_path,
+                        'PDF',
+                        resolution=100.0,
+                        save_all=True,
+                        append_images=image_files[1:])
 
-    
-    
+
 def upload_pdf(pdf_file_path, bucket):
     blob = bucket.blob(pdf_file_path)
     if blob.exists():
