@@ -19,6 +19,8 @@ bucket = storage.bucket()
 cur_path = os.path.dirname(__file__)
 #load data
 df = pd.read_csv(f'{cur_path}/../data/data.csv')
+df = df[df['year']>2017]
+df = df[~df['screenshot_path'].isna()]
 
 #https://www, if we have /generate, send our data to the url
 APP_ROOT = os.getenv('APP_ROOT', '/generate')
@@ -59,19 +61,15 @@ def generate_pastpaper():
 
     component2 = pd.concat(component2_questions)
     component4 = pd.concat(component4_questions)
-    component2 = pd.concat(component6_questions)
-
-    # images = {
-    #     'component2': component2['screenshot_path'].to_list(),
-    #     'component4': component4['screenshot_path'].to_list(),
-    #     'component6': component6['screenshot_path'].to_list()
-    # }
+    component6 = pd.concat(component6_questions)
 
     images = {
-        'component2': ['screenshots/2010/march/component2/q1.png'],
-        'component4': ['screenshots/2010/march/component2/q1.png'],
-        'component6': ['screenshots/2010/march/component2/q1.png'],
+        'component2': component2['screenshot_path'].to_list(),
+        'component4': component4['screenshot_path'].to_list(),
+        'component6': component6['screenshot_path'].to_list()
     }
+
+  
 
     component2_pdf = process_pdf(images['component2'], bucket, topic_list, options[0])
     component4_pdf = process_pdf(images['component4'], bucket, topic_list, options[1])

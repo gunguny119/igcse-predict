@@ -21,9 +21,12 @@ def process_pdf(images, bucket, selected_topics, component):
 def download_images(images, bucket):
     real_files = []
     for filename in images:  # screenshots/year/month/component/q1
+        print(filename)
         if 'component2' in filename:
             real_file = filename + '.png'
             blob = bucket.blob(real_file)
+            if not blob.exists():
+                continue
             os.makedirs(os.path.dirname(real_file), exist_ok=True)
             blob.download_to_filename(real_file)
             real_files.append(real_file)
