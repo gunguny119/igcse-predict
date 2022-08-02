@@ -19,7 +19,7 @@ bucket = storage.bucket()
 cur_path = os.path.dirname(__file__)
 #load data
 df = pd.read_csv(f'{cur_path}/../data/data.csv')
-df = df[df['year']>2017]
+df = df[df['year'] > 2017]
 df = df[~df['screenshot_path'].isna()]
 
 #https://www, if we have /generate, send our data to the url
@@ -68,8 +68,6 @@ def generate_pastpaper():
         'component4': component4['screenshot_path'].to_list(),
         'component6': component6['screenshot_path'].to_list()
     }
-
-  
 
     component2_pdf = process_pdf(images['component2'], bucket, topic_list, options[0])
     component4_pdf = process_pdf(images['component4'], bucket, topic_list, options[1])
