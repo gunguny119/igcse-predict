@@ -30,26 +30,36 @@ def generate_pastpaper():
     topic_list = data.get('topics')
     options = data.get('options')  # 21, 41, 61...
 
-    topic_df = df[df['topic'].isin(topic_list)]
+    topic_df = df[df['topic'].isin(topic_list) | (df['component'] == options[2])]
 
     component2 = topic_df[topic_df['component'] == options[0]]
     component4 = topic_df[topic_df['component'] == options[1]]
     component6 = topic_df[topic_df['component'] == options[2]]
 
-    
     component2_questions = []
-    for i in range(1,41):
-         component2_questions.append(component2[component2['question number'] == i].sample(1))
+    for i in range(1, 41):
+        q = component2[component2['question number'] == i]
+        if len(q) == 0:
+            continue
+        component2_questions.append(q.sample(1))
 
     component4_questions = []
-    for i in range(1,7):
-         component4_questions.append(component4[component4['question number'] == i].sample(1))
-         
+    for i in range(1, 7):
+        q = component4[component4['question number'] == i]
+        if len(q) == 0:
+            continue
+        component4_questions.append(q.sample(1))
+
     component6_questions = []
-    for i in range(1,5):
-         component6_questions.append(component6[component6['question number'] == i].sample(1))
+    for i in range(1, 5):
+        q = component6[component6['question number'] == i]
+        if len(q) == 0:
+            continue
+        component6_questions.append(q.sample(1))
 
-
+    component2 = pd.concat(component2_questions)
+    component4 = pd.concat(component4_questions)
+    component2 = pd.concat(component6_questions)
 
     # images = {
     #     'component2': component2['screenshot_path'].to_list(),
