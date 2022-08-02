@@ -45,13 +45,18 @@ def download_images(images, bucket):
 
     return real_files
 
-def merge_pages(images, size =(1653,2339)):
+
+def merge_pages(images, size=(1653, 2339)):
     pages = []
     first = images[0]
     for img in images[1:]:
-        merged_height =first.size[1]+img.size[1]+100
+        merged_height = first.size[1] + img.size[1] + 100
         if merged_height <= size[1]:
-            first = np.concatenate([np.array(first), np.full((100,size[0], 3),255,dtype = np.uint8), np.array(img)])
+            first = np.concatenate([
+                np.array(first),
+                np.full((100, size[0], 3), 255, dtype=np.uint8),
+                np.array(img)
+            ])
             first = Image.fromarray(first, 'RGB')
 
         else:
@@ -60,7 +65,6 @@ def merge_pages(images, size =(1653,2339)):
 
     pages.append(first)
     return pages
-
 
 
 def convert_to_rgb(img):
@@ -77,13 +81,13 @@ def convert_to_pdf(images, pdf_file_path):
     image_files = []
     for filename in images:
         image_files.append(convert_to_rgb(Image.open(filename)))
-    pages = merge_pages(image_files, size = (1653,2339))
+    pages = merge_pages(image_files, size=(1653, 2339))
 
     pages[0].save(pdf_file_path,
-                        'PDF',
-                        resolution=100.0,
-                        save_all=True,
-                        append_images=pages[1:])
+                  'PDF',
+                  resolution=100.0,
+                  save_all=True,
+                  append_images=pages[1:])
 
 
 def upload_pdf(pdf_file_path, bucket):

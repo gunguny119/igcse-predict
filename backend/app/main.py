@@ -23,8 +23,9 @@ df = df[df['year'] > 2017]
 df = df[~df['screenshot_path'].isna()]
 
 grade_threshold = pd.read_csv(f'{cur_path}/../data/grade_thresholds.csv')
-grade_threshold[['A*','A','B','C','D','E','F','G']] = grade_threshold[['A*','A','B','C','D','E','F','G']] / 200
-grade_threshold = grade_threshold[['A*','A','B','C','D','E','F','G']].mean()
+grade_threshold[['A*', 'A', 'B', 'C', 'D', 'E', 'F',
+                 'G']] = grade_threshold[['A*', 'A', 'B', 'C', 'D', 'E', 'F', 'G']] / 200
+grade_threshold = grade_threshold[['A*', 'A', 'B', 'C', 'D', 'E', 'F', 'G']].mean()
 
 #https://www, if we have /generate, send our data to the url
 APP_ROOT = os.getenv('APP_ROOT', '/generate')
@@ -89,16 +90,14 @@ def generate_pastpaper():
         'component6': component6["marks"].sum(),
     }
 
-    total_marks = marks['component2'] * 1.5 + marks['component4']*1.25 + marks['component6']
+    total_marks = marks['component2'] * 1.5 + marks['component4'] * 1.25 + marks[
+        'component6']
     threshold = grade_threshold * total_marks
 
     rounded = []
-    for n in threshold: 
+    for n in threshold:
         rounded.append(round(n))
 
-    response = {
-        'pdfs':pdfs,
-        'grade_thresholds': rounded
-    }
+    response = {'pdfs': pdfs, 'grade_thresholds': rounded}
 
     return response
