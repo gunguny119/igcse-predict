@@ -1,6 +1,8 @@
 import os
 from PIL import Image
 
+import numpy as np
+
 
 def process_pdf(images, bucket, selected_topics, component):
     selected_topic_index = sorted([int(topic.split(' ')[0]) for topic in selected_topics])
@@ -43,12 +45,29 @@ def download_images(images, bucket):
 
     return real_files
 
+def merge_pages(images, size =(1653,2339)):
+    pages = []
+    first = images[0]
+    for img in images[1:]:
+        merged_height =first.size[1]+img.size[1]+100
+        if merged_height <= size[1]:
+            first = np.concatenate([np.array(first), np.full((100,size[0], 3),255,dtype = np.uint8), np.array(img)])
+            first = Image.fromarray(first, 'RGB')
 
-def convert_to_rgb(img, size=(1654, 2339)):
+        else:
+            pages.append(first)
+            first = img
+
+    pages.append(first)
+    return pages
+
+
+
+def convert_to_rgb(img):
     # default size = A4
     if len(img.split()) == 3:
         return img
-    rgb = Image.new('RGB', size, (255, 255, 255))
+    rgb = Image.new('RGB', img.size, (255, 255, 255))
     rgb.paste(img, mask=img.split()[-1])
     return rgb
 
@@ -58,12 +77,13 @@ def convert_to_pdf(images, pdf_file_path):
     image_files = []
     for filename in images:
         image_files.append(convert_to_rgb(Image.open(filename)))
+    pages = merge_pages(image_files, size = (1653,2339))
 
-    image_files[0].save(pdf_file_path,
+    pages[0].save(pdf_file_path,
                         'PDF',
                         resolution=100.0,
                         save_all=True,
-                        append_images=image_files[1:])
+                        append_images=pages[1:])
 
 
 def upload_pdf(pdf_file_path, bucket):
