@@ -3,6 +3,7 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import vSelect from "vue-select";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import EasyDataTable from "vue3-easy-data-table";
 </script>
 
 <template>
@@ -48,9 +49,19 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
     <div style="margin-top: 50px">
       <button class="generate-button" @click="reset">Retry</button>
     </div>
-    <div>
-      <span>{{ grade_thresholds }}</span>
-    </div>
+    <EasyDataTable
+      :headers="[
+        { text: 'A*', value: 'A*' },
+        { text: 'A', value: 'A' },
+        { text: 'B', value: 'B' },
+        { text: 'C', value: 'C' },
+        { text: 'D', value: 'D' },
+        { text: 'E', value: 'E' },
+        { text: 'F', value: 'F' },
+        { text: 'G', value: 'G' },
+      ]"
+      :items="grade_thresholds"
+    />
   </div>
 </template>
 
@@ -82,10 +93,22 @@ export default {
         "13 Carbonates",
         "14 Organic chemistry",
       ],
+      grade_list: ["A*", "A", "B", "C", "D", "E", "F", "G"],
       component2: "",
       component4: "",
       component6: "",
-      grade_thresholds: [],
+      grade_thresholds: [
+        {
+          "A*": "180>",
+          A: "170>",
+          B: "160>",
+          C: "150>",
+          D: "140>",
+          E: "130>",
+          F: "120>",
+          G: "110>",
+        },
+      ],
       selected_option: [],
       option_map: {
         CX: [21, 41, 61],
@@ -120,7 +143,12 @@ export default {
       this.component2 = await this.get_pdf_download_url(data.pdfs.component2);
       this.component4 = await this.get_pdf_download_url(data.pdfs.component4);
       this.component6 = await this.get_pdf_download_url(data.pdfs.component6);
-      this.grade_thresholds = data.grade_thresholds;
+      this.grade_thresholds = {};
+      this.grade_thresholds = {};
+      this.grade_list.forEach(
+        (key, i) => (this.grade_thresholds[key] = data.grade_thresholds[i])
+      );
+      this.grade_thresholds = [this.grade_thresholds];
 
       this.got_response = true;
       this.clicked = false;
