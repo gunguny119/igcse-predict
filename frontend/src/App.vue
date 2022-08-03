@@ -10,9 +10,16 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
     <h1>IGCSE Chemistry</h1>
     <h2>Select your studied topics:</h2>
     <v-select
-      v-model="selected_topics"
+      :modelValue="selected_topics"
+      @update:modelValue="selected_topics = $event"
       multiple
       :options="topic_list"
+    ></v-select>
+    <h2>Also, select your component option:</h2>
+    <v-select
+      :modelValue="selected_option"
+      @update:modelValue="selected_option = $event"
+      :options="['CX', 'CY', 'CZ']"
     ></v-select>
     <p v-show="show_error_msg" style="color: red">
       Please select one or more topics.
@@ -40,6 +47,9 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
     </button>
     <div style="margin-top: 50px">
       <button class="generate-button" @click="reset">Retry</button>
+    </div>
+    <div>
+      <span>{{ grade_thresholds }}</span>
     </div>
   </div>
 </template>
@@ -75,7 +85,13 @@ export default {
       component2: "",
       component4: "",
       component6: "",
-      selected_option: [2, 4, 6],
+      grade_thresholds: [],
+      selected_option: [],
+      option_map: {
+        CX: [21, 41, 61],
+        CY: [22, 42, 62],
+        CZ: [23, 43, 63],
+      },
     };
   },
   methods: {
@@ -95,15 +111,16 @@ export default {
         },
         body: JSON.stringify({
           topics: this.selected_topics,
-          options: this.selected_option,
+          options: this.option_map[this.selected_option],
         }),
       });
 
       const data = await response.json();
 
-      this.component2 = await this.get_pdf_download_url(data.component2);
-      this.component4 = await this.get_pdf_download_url(data.component4);
-      this.component6 = await this.get_pdf_download_url(data.component6);
+      this.component2 = await this.get_pdf_download_url(data.pdfs.component2);
+      this.component4 = await this.get_pdf_download_url(data.pdfs.component4);
+      this.component6 = await this.get_pdf_download_url(data.pdfs.component6);
+      this.grade_thresholds = data.grade_thresholds;
 
       this.got_response = true;
       this.clicked = false;

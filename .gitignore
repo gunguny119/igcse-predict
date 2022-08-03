@@ -28,6 +28,7 @@ igcse/extras/
 screenshots/
 marking_schemes/
 generated_papers/
+grade_thresholds/
 
 # Logs
 logs
