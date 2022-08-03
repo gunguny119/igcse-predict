@@ -74,9 +74,10 @@ def generate_pastpaper():
         'component6': component6['screenshot_path'].to_list()
     }
 
-    component2_pdf = process_pdf(images['component2'], bucket, topic_list, options[0])
-    component4_pdf = process_pdf(images['component4'], bucket, topic_list, options[1])
-    component6_pdf = process_pdf(images['component6'], bucket, topic_list, options[2])
+    component2_pdf, num_questions = process_pdf(images['component2'], bucket, topic_list,
+                                                options[0])
+    component4_pdf, _ = process_pdf(images['component4'], bucket, topic_list, options[1])
+    component6_pdf, _ = process_pdf(images['component6'], bucket, topic_list, options[2])
 
     pdfs = {
         'component2': component2_pdf,
@@ -85,7 +86,7 @@ def generate_pastpaper():
     }
 
     marks = {
-        'component2': len(component2),
+        'component2': num_questions,
         'component4': component4["marks"].sum(),
         'component6': component6["marks"].sum(),
     }

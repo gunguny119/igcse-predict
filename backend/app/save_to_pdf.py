@@ -17,7 +17,7 @@ def process_pdf(images, bucket, selected_topics, component):
         convert_to_pdf(real_files, pdf_file_path)
     upload_pdf(pdf_file_path, bucket)
 
-    return pdf_file_path
+    return pdf_file_path, len(real_files)
 
 
 def download_images(images, bucket):
