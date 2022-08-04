@@ -37,6 +37,7 @@ import EasyDataTable from "vue3-easy-data-table";
 
   <div v-show="got_response">
     <h1>Server Response</h1>
+    <h3>Questioin Papers</h3>
     <button class="generate-button">
       <a :href="component2" target="_blank">component2</a>
     </button>
@@ -46,9 +47,7 @@ import EasyDataTable from "vue3-easy-data-table";
     <button class="generate-button">
       <a :href="component6" target="_blank">component6</a>
     </button>
-    <div style="margin-top: 50px">
-      <button class="generate-button" @click="reset">Retry</button>
-    </div>
+    <h3>Grade Thresholds</h3>
     <EasyDataTable
       :headers="[
         { text: 'A*', value: 'A*' },
@@ -62,6 +61,9 @@ import EasyDataTable from "vue3-easy-data-table";
       ]"
       :items="grade_thresholds"
     />
+    <div style="margin-top: 50px">
+      <button class="generate-button" @click="reset">Retry</button>
+    </div>
   </div>
 </template>
 
