@@ -1,7 +1,7 @@
 import requests
 from pprint import pprint
 
-response = requests.post("http://127.0.0.1:5000/generate",
+response = requests.post("https://igcse-predict.herokuapp.com/generate",
                          json={
                              "topics": [
                                  "1 The particulate nature of matter",
