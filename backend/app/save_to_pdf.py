@@ -12,8 +12,8 @@ def process_pdf(images, bucket, selected_topics, component):
         os.makedirs('generated_papers')
 
     pdf_file_path = f'generated_papers/component{component}_{"-".join(selected_topic_index)}.pdf'
+    real_files = download_images(images, bucket)
     if not os.path.isfile(pdf_file_path):
-        real_files = download_images(images, bucket)
         convert_to_pdf(real_files, pdf_file_path)
     upload_pdf(pdf_file_path, bucket)
 
