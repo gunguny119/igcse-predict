@@ -4,17 +4,21 @@ from PIL import Image
 import numpy as np
 
 
-def process_pdf(images, bucket, selected_topics, component):
+def process_pdf(images, bucket, selected_topics, component, ms = False):
     selected_topic_index = sorted([int(topic.split(' ')[0]) for topic in selected_topics])
     selected_topic_index = [str(i) for i in selected_topic_index]
 
-    if not os.path.isdir('generated_papers'):
-        os.makedirs('generated_papers')
+    if ms:
+        base_dir = 'marking_schemes'
+    else:
+        base_dir = 'generated_papers'
+    if not os.path.isdir(base_dir):
+        os.makedirs(base_dir)
 
-    pdf_file_path = f'generated_papers/component{component}_{"-".join(selected_topic_index)}.pdf'
+    pdf_file_path = f'{base_dir}/component{component}_{"-".join(selected_topic_index)}.pdf'
     real_files = download_images(images, bucket)
     if not os.path.isfile(pdf_file_path):
-        convert_to_pdf(real_files, pdf_file_path)
+        convert_to_pdf(real_files, pdf_file_path, ms = ms)
     upload_pdf(pdf_file_path, bucket)
 
     return pdf_file_path, len(real_files)
@@ -76,12 +80,18 @@ def convert_to_rgb(img):
     return rgb
 
 
-def convert_to_pdf(images, pdf_file_path):
+def convert_to_pdf(images, pdf_file_path, ms = False):
     """images: list of str, which has image paths"""
     image_files = []
     for filename in images:
         image_files.append(convert_to_rgb(Image.open(filename)))
-    pages = merge_pages(image_files, size=(1653, 2339))
+
+    if ms:
+        size = (2339,1653)
+
+    else:
+        size = (1654,2338)
+    pages = merge_pages(image_files, size=size)
 
     pages[0].save(pdf_file_path,
                   'PDF',
