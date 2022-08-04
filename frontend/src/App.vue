@@ -37,7 +37,7 @@ import EasyDataTable from "vue3-easy-data-table";
 
   <div v-show="got_response">
     <h1>Server Response</h1>
-    <h3>Questioin Papers</h3>
+    <h3>Question Papers</h3>
     <button class="generate-button">
       <a :href="component2" target="_blank">component2</a>
     </button>
