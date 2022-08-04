@@ -47,6 +47,13 @@ import EasyDataTable from "vue3-easy-data-table";
     <button class="generate-button">
       <a :href="component6" target="_blank">component6</a>
     </button>
+    <h3>Marking Schemes</h3>
+    <button class="generate-button">
+      <a :href="ms4" target="_blank">component4</a>
+    </button>
+    <button class="generate-button">
+      <a :href="ms6" target="_blank">component6</a>
+    </button>
     <h3>Grade Thresholds</h3>
     <EasyDataTable
       :headers="[
@@ -99,6 +106,9 @@ export default {
       component2: "",
       component4: "",
       component6: "",
+      ms2: [],
+      ms4: "",
+      ms6: "",
       grade_thresholds: [
         {
           "A*": "180>",
@@ -145,6 +155,11 @@ export default {
       this.component2 = await this.get_pdf_download_url(data.pdfs.component2);
       this.component4 = await this.get_pdf_download_url(data.pdfs.component4);
       this.component6 = await this.get_pdf_download_url(data.pdfs.component6);
+
+      this.ms4 = await this.get_pdf_download_url(data.marking_schemes.component4);
+      this.ms6 = await this.get_pdf_download_url(data.marking_schemes.component6);
+
+      this.ms2 = data.marking_schemes.component2;
       this.grade_thresholds = {};
       this.grade_thresholds = {};
       this.grade_list.forEach(
