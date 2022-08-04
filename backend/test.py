@@ -9,5 +9,6 @@ response = requests.post("https://igcse-predict.herokuapp.com/generate",
                                  "3 Atoms, elements and compounds",
                              ],
                              "options": [22, 42, 62],
-                         })
+                         },
+                         timeout = 600)
 pprint(response.json())
