@@ -3,7 +3,6 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import vSelect from "vue-select";
 import PulseLoader from "vue-spinner/src/PulseLoader.vue";
-import EasyDataTable from "vue3-easy-data-table";
 </script>
 
 <template>
@@ -55,19 +54,25 @@ import EasyDataTable from "vue3-easy-data-table";
       <a :href="ms6" target="_blank">component6</a>
     </button>
     <h3>Grade Thresholds</h3>
-    <EasyDataTable
-      :headers="[
-        { text: 'A*', value: 'A*' },
-        { text: 'A', value: 'A' },
-        { text: 'B', value: 'B' },
-        { text: 'C', value: 'C' },
-        { text: 'D', value: 'D' },
-        { text: 'E', value: 'E' },
-        { text: 'F', value: 'F' },
-        { text: 'G', value: 'G' },
-      ]"
-      :items="grade_thresholds"
-    />
+    <table>
+      <thead>
+        <tr>
+          <th>A*</th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+          <th>D</th>
+          <th>E</th>
+          <th>F</th>
+          <th>G</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td v-for="item in grade_thresholds">{{ item }}</td>
+        </tr>
+      </tbody>
+    </table>
     <div style="margin-top: 50px">
       <button class="generate-button" @click="reset">Retry</button>
     </div>
@@ -102,25 +107,13 @@ export default {
         "13 Carbonates",
         "14 Organic chemistry",
       ],
-      grade_list: ["A*", "A", "B", "C", "D", "E", "F", "G"],
       component2: "",
       component4: "",
       component6: "",
       ms2: [],
       ms4: "",
       ms6: "",
-      grade_thresholds: [
-        {
-          "A*": "180>",
-          A: "170>",
-          B: "160>",
-          C: "150>",
-          D: "140>",
-          E: "130>",
-          F: "120>",
-          G: "110>",
-        },
-      ],
+      grade_thresholds: [180, 170, 160, 150, 140, 130, 120, 110],
       selected_option: [],
       option_map: {
         CX: [21, 41, 61],
@@ -156,16 +149,15 @@ export default {
       this.component4 = await this.get_pdf_download_url(data.pdfs.component4);
       this.component6 = await this.get_pdf_download_url(data.pdfs.component6);
 
-      this.ms4 = await this.get_pdf_download_url(data.marking_schemes.component4);
-      this.ms6 = await this.get_pdf_download_url(data.marking_schemes.component6);
+      this.ms4 = await this.get_pdf_download_url(
+        data.marking_schemes.component4
+      );
+      this.ms6 = await this.get_pdf_download_url(
+        data.marking_schemes.component6
+      );
 
       this.ms2 = data.marking_schemes.component2;
-      this.grade_thresholds = {};
-      this.grade_thresholds = {};
-      this.grade_list.forEach(
-        (key, i) => (this.grade_thresholds[key] = data.grade_thresholds[i])
-      );
-      this.grade_thresholds = [this.grade_thresholds];
+      this.grade_thresholds = data.grade_thresholds;
 
       this.got_response = true;
       this.clicked = false;
@@ -194,5 +186,15 @@ export default {
 
 .generate-button:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+table {
+  width: 100%;
+  border: 1px solid;
+}
+
+th,
+td {
+  border: 1px solid;
 }
 </style>
