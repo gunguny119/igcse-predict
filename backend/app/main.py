@@ -80,8 +80,16 @@ def generate_pastpaper():
     component6_pdf, _ = process_pdf(images['component6'], bucket, topic_list, options[2])
 
     component2_ms = component2['answer'].to_list()
-    component4_ms, _ = process_pdf(component4['ms_path'].to_list(), bucket, topic_list, options[1], ms = True)
-    component6_ms, _ = process_pdf(component6['ms_path'].to_list(), bucket, topic_list, options[2], ms = True)
+    component4_ms, _ = process_pdf(component4['ms_path'].to_list(),
+                                   bucket,
+                                   topic_list,
+                                   options[1],
+                                   ms=True)
+    component6_ms, _ = process_pdf(component6['ms_path'].to_list(),
+                                   bucket,
+                                   topic_list,
+                                   options[2],
+                                   ms=True)
 
     pdfs = {
         'component2': component2_pdf,
@@ -90,9 +98,9 @@ def generate_pastpaper():
     }
 
     marking_schemes = {
-        'component2' : component2_ms,
-        'component4' : component4_ms,
-        'component6' : component6_ms,
+        'component2': component2_ms,
+        'component4': component4_ms,
+        'component6': component6_ms,
     }
 
     marks = {
@@ -109,6 +117,10 @@ def generate_pastpaper():
     for n in threshold:
         rounded.append(round(n))
 
-    response = {'pdfs': pdfs, 'grade_thresholds': rounded, 'marking_schemes' : marking_schemes}
+    response = {
+        'pdfs': pdfs,
+        'grade_thresholds': rounded,
+        'marking_schemes': marking_schemes
+    }
 
     return response
