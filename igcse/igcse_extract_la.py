@@ -1,9 +1,10 @@
+import argparse
 import os
 import re
 import pandas as pd
 
 
-def segment_questions_component46(lines, component, subject):
+def segment_questions_la(lines, component, subject):
     question_found = False
     questions = []
     marks = []
@@ -41,32 +42,45 @@ def segment_questions_component46(lines, component, subject):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--subject', type=str, default='chemistry')
+    parser.add_argument('--code', type=str, default='0620')
+    parser.add_argument('--mcq_component', type=str, default='2')
+    args = parser.parse_args()
+
+    if args.subject == 'chemistry':
+        screenshot_dir = 'screenshots'
+        ms_dir = 'marking_schemes'
+    else:
+        screenshot_dir = f'screenshots/{args.subject}'
+        ms_dir = f'marking_schemes/{args.subject}'
+
     month_map = {'m': 'march', 's': 'summer', 'w': 'winter'}
     data = []
     for year in range(2016, 2022):
-        for qp in os.listdir(f'pastpapers/{year}'):
+        for qp in os.listdir(f'pastpapers/{args.subject}/{year}'):
             if not qp.endswith('txt'):
                 continue
-            if 'qp_2' in qp:
+            if f'qp_{args.mcq_component}' in qp:
                 continue
-            fname = f'pastpapers/{year}/{qp}'
+            fname = f'pastpapers/{args.subject}/{year}/{qp}'
 
             names = qp.replace('.txt', '')
             _, month, _, component = names.split('_')
 
             with open(fname) as f:
-                questions, marks = segment_questions_component46(
-                    f.readlines(), component, '0620')
+                questions, marks = segment_questions_la(f.readlines(), component,
+                                                        args.code)
 
             # questions = list(filter(lambda x: re.match(r'^\d+.*', x), questions))
             # question_numbers = [int(re.split(r'\s', q)[0]) for q in questions]
             question_numbers = list(range(1, len(questions) + 1))
             screenshot_paths = [
-                f'screenshots/{year}/{month_map[month[0]]}/component{component}/q{n}'
+                f'{screenshot_dir}/{year}/{month_map[month[0]]}/component{component}/q{n}'
                 for n in question_numbers
             ]
             ms_paths = [
-                f'marking_schemes/{year}/{month_map[month[0]]}/component{component}/q{n}'
+                f'{ms_dir}/{year}/{month_map[month[0]]}/component{component}/q{n}'
                 for n in question_numbers
             ]
             curr_data = {
@@ -84,7 +98,7 @@ def main():
     df = pd.concat(data)
     df.sort_values(by=['year', 'month', 'component', 'question number'], inplace=True)
 
-    df.to_csv('component46_2016-2021.csv', index=False)
+    df.to_csv(f'{args.subject}_la_2016-2021.csv', index=False)
 
 
 if __name__ == '__main__':

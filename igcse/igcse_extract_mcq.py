@@ -1,9 +1,10 @@
+import argparse
 import os
 import re
 import pandas as pd
 
 
-def segment_questions_component2(lines, component, subject):
+def segment_questions_mcq(lines, component, subject):
     q_found = False
     answer_found = [False, False, False, False]
 
@@ -46,27 +47,38 @@ def segment_questions_component2(lines, component, subject):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--subject', type=str, default='chemistry')
+    parser.add_argument('--code', type=str, default='0620')
+    parser.add_argument('--mcq_component', type=str, default='2')
+    args = parser.parse_args()
+
+    if args.subject == 'chemistry':
+        screenshot_dir = 'screenshots'
+    else:
+        screenshot_dir = f'screenshots/{args.subject}'
+
     month_map = {'m': 'march', 's': 'summer', 'w': 'winter'}
     data = []
     for year in range(2016, 2022):
-        for qp in os.listdir(f'pastpapers/{year}'):
+        for qp in os.listdir(f'pastpapers/{args.subject}/{year}'):
             if not qp.endswith('txt'):
                 continue
-            if not 'qp_2' in qp:
+            if not f'qp_{args.mcq_component}' in qp:
                 continue
-            fname = f'pastpapers/{year}/{qp}'
+            fname = f'pastpapers/{args.subject}/{year}/{qp}'
 
             names = qp.replace('.txt', '')
             _, month, _, component = names.split('_')
 
             with open(fname) as f:
-                questions = segment_questions_component2(f.readlines(), component, '0620')
+                questions = segment_questions_mcq(f.readlines(), component, args.code)
 
             questions = list(filter(lambda x: re.match(r'\d+  ', x), questions))
 
             question_numbers = [int(q.split(' ')[0]) for q in questions]
             screenshot_paths = [
-                f'screenshots/{year}/{month_map[month[0]]}/component{component}/q{n}'
+                f'{screenshot_dir}/{year}/{month_map[month[0]]}/component{component}/q{n}'
                 for n in question_numbers
             ]
             data.append(
@@ -82,7 +94,7 @@ def main():
     df = pd.concat(data)
     df.sort_values(by=['year', 'month', 'component', 'question number'], inplace=True)
 
-    df.to_csv('component2_2016-2021.csv', index=False)
+    df.to_csv(f'{args.subject}_mcq_2016-2021.csv', index=False)
 
 
 if __name__ == '__main__':
