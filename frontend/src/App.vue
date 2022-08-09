@@ -6,7 +6,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 </script>
 
 <template>
-  <div v-show="!clicked && !got_response">
+  <div v-show="!clicked && !got_response && !failed">
     <h1>IGCSE Chemistry</h1>
     <h2>Select your studied topics:</h2>
     <v-select
@@ -32,6 +32,14 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
   <div v-show="clicked">
     <h1>Generating Paper...</h1>
     <pulse-loader color="green"></pulse-loader>
+  </div>
+
+  <div v-show="failed">
+    <h2>We could not generate exam papers with your selected topics.</h2>
+    <h2>Please select another topics.</h2>
+    <div style="margin-top: 50px">
+      <button class="generate-button" @click="reset">Retry</button>
+    </div>
   </div>
 
   <div v-show="got_response">
@@ -90,6 +98,7 @@ export default {
       clicked: false,
       show_error_msg: false,
       got_response: false,
+      failed: false,
       selected_topics: [],
       topic_list: [
         "1 The particulate nature of matter",
@@ -124,7 +133,10 @@ export default {
   },
   methods: {
     onGeneratePaper() {
-      if (this.selected_topics.length == 0) {
+      if (
+        this.selected_topics.length == 0 ||
+        this.selected_option.length == 0
+      ) {
         this.show_error_msg = true;
       } else {
         this.clicked = true;
@@ -132,35 +144,40 @@ export default {
       }
     },
     sendRequest: async function () {
-      const response = await fetch("http://127.0.0.1:5000/generate", {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json; charset=utf-8",
-        },
-        body: JSON.stringify({
-          topics: this.selected_topics,
-          options: this.option_map[this.selected_option],
-        }),
-      });
+      try {
+        const response = await fetch("http://127.0.0.1:5000/generate", {
+          method: "post",
+          headers: {
+            "Content-Type": "application/json; charset=utf-8",
+          },
+          body: JSON.stringify({
+            topics: this.selected_topics,
+            options: this.option_map[this.selected_option],
+          }),
+        });
 
-      const data = await response.json();
+        const data = await response.json();
 
-      this.component2 = await this.get_pdf_download_url(data.pdfs.component2);
-      this.component4 = await this.get_pdf_download_url(data.pdfs.component4);
-      this.component6 = await this.get_pdf_download_url(data.pdfs.component6);
+        this.component2 = await this.get_pdf_download_url(data.pdfs.component2);
+        this.component4 = await this.get_pdf_download_url(data.pdfs.component4);
+        this.component6 = await this.get_pdf_download_url(data.pdfs.component6);
 
-      this.ms4 = await this.get_pdf_download_url(
-        data.marking_schemes.component4
-      );
-      this.ms6 = await this.get_pdf_download_url(
-        data.marking_schemes.component6
-      );
+        this.ms4 = await this.get_pdf_download_url(
+          data.marking_schemes.component4
+        );
+        this.ms6 = await this.get_pdf_download_url(
+          data.marking_schemes.component6
+        );
 
-      this.ms2 = data.marking_schemes.component2;
-      this.grade_thresholds = data.grade_thresholds;
+        this.ms2 = data.marking_schemes.component2;
+        this.grade_thresholds = data.grade_thresholds;
 
-      this.got_response = true;
-      this.clicked = false;
+        this.got_response = true;
+        this.clicked = false;
+      } catch (e) {
+        this.failed = true;
+        this.clicked = false;
+      }
     },
     get_pdf_download_url: async function (pdf_path) {
       const pdfReference = ref(storage, pdf_path);
@@ -170,10 +187,13 @@ export default {
     reset() {
       this.clicked = false;
       this.got_response = false;
+      this.failed = false;
+      this.show_error_msg = false;
       this.component2 = "";
       this.component4 = "";
       this.component6 = "";
       this.selected_topics = [];
+      this.selected_option = [];
     },
   },
 };
