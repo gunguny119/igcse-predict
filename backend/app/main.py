@@ -19,7 +19,6 @@ bucket = storage.bucket()
 cur_path = os.path.dirname(__file__)
 #load data
 df = pd.read_csv(f'{cur_path}/../data/data.csv')
-df = df[df['year'] > 2017]
 df = df[~df['screenshot_path'].isna()]
 
 grade_threshold = pd.read_csv(f'{cur_path}/../data/grade_thresholds.csv')
