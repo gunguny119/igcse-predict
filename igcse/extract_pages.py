@@ -1,14 +1,22 @@
+import argparse
 import os
 from pdf2image import convert_from_path
 
-save_path = '../screenshots'
+parser = argparse.ArgumentParser()
+parser.add_argument('--subject', type=str, default='chemistry')
+args = parser.parse_args()
+
+if args.subject == 'chemistry':
+    save_path = '../screenshots'
+else:
+    save_path = f'../screenshots/{args.subject}'
 os.makedirs(save_path, exist_ok=True)
 
 month_map = {'m': 'march', 's': 'summer', 'w': 'winter'}
 
 for year in range(2016, 2022):
-    for f in os.listdir(f'pastpapers/{year}/qp/'):
-        fname = f'pastpapers/{year}/qp/{f}'
+    for f in os.listdir(f'pastpapers/{args.subject}/{year}/qp/'):
+        fname = f'pastpapers/{args.subject}/{year}/qp/{f}'
 
         _, month, _, comp = f.split('_')
         month = month_map[month[0]]
