@@ -1,12 +1,18 @@
- mkdir pastpapers
- for i in {10..21}; do
-    mkdir 20${i}
-    for season in m s w; do
+subject=chemistry
+code_id=0620
+seasons=(m s w)
+components=(2 4 6)
+alts=(1 2 3)
+
+ mkdir -P pastpapers/${subject}
+ for i in {16..21}; do
+    mkdir pastpapers/${subject}/20${i}
+    for season in ${seasons[@]}; do
         for type in ms qp; do
-            mkdir 20${i}/$type
-            for component in 2 4 6; do
-                for alt in 1 2 3; do
-                    wget https://papers.gceguide.com/Cambridge%20IGCSE/Chemistry%20\(0620\)/20$i/0620_${season}${i}_${type}_${component}${alt}.pdf -P 20${i}/$type
+            mkdir pastpapers/${subject}/20${i}/$type
+            for component in ${components[@]}; do
+                for alt in ${alts[@]}; do
+                    wget https://papers.gceguide.com/Cambridge%20IGCSE/$subject%20\(${code_id}\)/20$i/${code_id}_${season}${i}_${type}_${component}${alt}.pdf -P pastpapers/${subject}/20${i}/$type
                 done
             done
         done

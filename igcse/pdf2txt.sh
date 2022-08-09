@@ -1,9 +1,15 @@
- for i in {10..21}; do
-    for season in m s w; do
-        for component in 2 4 6; do
-            for alt in 1 2 3; do
-                if [[ -f pastpapers/20${i}/qp/0620_${season}${i}_qp_${component}${alt}.pdf ]]; then
-                    pdf2txt.py -o pastpapers/20${i}/0620_${season}${i}_qp_${component}${alt}.txt pastpapers/20${i}/qp/0620_${season}${i}_qp_${component}${alt}.pdf
+subject=chemistry
+code_id=0620
+seasons=(m s w)
+components=(2 4 6)
+alts=(1 2 3)
+
+ for i in {16..21}; do
+    for season in ${seasons[@]}; do
+        for component in ${components[@]}; do
+            for alt in ${alts[@]}; do
+                if [[ -f pastpapers/${subject}/20${i}/qp/${code_id}_${season}${i}_qp_${component}${alt}.pdf ]]; then
+                    pdf2txt.py -o pastpapers/${subject}/20${i}/${code_id}_${season}${i}_qp_${component}${alt}.txt pastpapers/${subject}/20${i}/qp/${code_id}_${season}${i}_qp_${component}${alt}.pdf
                 fi
             done
         done
