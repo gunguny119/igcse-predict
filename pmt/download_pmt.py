@@ -1,10 +1,9 @@
 import os
 import re
-from pprint import pprint
 
 import requests
-
-topic_list = [
+############################# Change Here ######################################
+TOPIC_LIST = [
     "particulate-nature-of-matter",
     "experimental-techniques",
     "atoms-elements-compounds",
@@ -20,12 +19,14 @@ topic_list = [
     "carbonates",
     "organic-chemistry",
 ]
+SUBJECT = "chemistry"
 
+#################################################################################
 topic_links = {}
-for t in topic_list:
+for t in TOPIC_LIST:
     response = requests.get(
-        f"https://www.physicsandmathstutor.com/chemistry-revision/igcse-cie/{t}/")
-    open(f"pmt/{t}/index.html", "wb").write(response.content)
+        f"https://www.physicsandmathstutor.com/{SUBJECT}-revision/igcse-cie/{t}/")
+    open(f"pmt/{SUBJECT}/{t}/index.html", "wb").write(response.content)
 
     with open(f'{t}/index.html') as f:
         found = False
@@ -46,4 +47,5 @@ for t in topic_list:
                     if not match.endswith('.pdf'):
                         continue
                     response = requests.get(match)
-                    open(f"{t}/{os.path.basename(match)}", "wb").write(response.content)
+                    open(f"pmt/{SUBJECT}/{t}/{os.path.basename(match)}",
+                         "wb").write(response.content)

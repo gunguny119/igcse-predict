@@ -1,3 +1,4 @@
+import argparse
 import re
 import pandas as pd
 import glob
@@ -64,6 +65,10 @@ def segment_questions_component46(lines, component, subject):
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--subject', type=str, default='chemistry')
+    parser.add_argument('--code', type=str, default='0620')
+    args = parser.parse_args()
     data = []
     for t in topic_list:
         for qp in glob.glob(f'pastpapers/{t}/*QP.pdf.txt'):
@@ -72,7 +77,7 @@ def main():
 
             with open(qp) as f:
                 print(qp)
-                questions, _ = segment_questions_component46(f.readlines(), 41, '0620')
+                questions, _ = segment_questions_component46(f.readlines(), 41, args.code)
 
             question_numbers = list(range(1, len(questions) + 1))
             curr_data = {
@@ -86,7 +91,7 @@ def main():
     df = pd.concat(data)
     df.sort_values(by=['topic'], inplace=True)
 
-    df.to_csv('pmt_long_answers.csv', index=False)
+    df.to_csv(f'{args.subject}/pmt_long_answers.csv', index=False)
 
 
 if __name__ == '__main__':
