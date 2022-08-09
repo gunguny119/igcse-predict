@@ -55,12 +55,27 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
       <a :href="component6" target="_blank">component6</a>
     </button>
     <h3>Marking Schemes</h3>
+    <button class="generate-button" @click="show_comp2 = !show_comp2">
+      component2
+    </button>
     <button class="generate-button">
       <a :href="ms4" target="_blank">component4</a>
     </button>
     <button class="generate-button">
       <a :href="ms6" target="_blank">component6</a>
     </button>
+    <div v-show="show_comp2">
+      <table>
+        <tr>
+          <th>Q No.</th>
+          <th>Answer</th>
+        </tr>
+        <tr v-for="(answer, index) in ms2">
+          <th>{{ index + 1 }}</th>
+          <td>{{ answer }}</td>
+        </tr>
+      </table>
+    </div>
     <h3>Grade Thresholds</h3>
     <table>
       <thead>
@@ -99,6 +114,7 @@ export default {
       show_error_msg: false,
       got_response: false,
       failed: false,
+      show_comp2: false,
       selected_topics: [],
       topic_list: [
         "1 The particulate nature of matter",
@@ -145,16 +161,19 @@ export default {
     },
     sendRequest: async function () {
       try {
-        const response = await fetch("http://127.0.0.1:5000/generate", {
-          method: "post",
-          headers: {
-            "Content-Type": "application/json; charset=utf-8",
-          },
-          body: JSON.stringify({
-            topics: this.selected_topics,
-            options: this.option_map[this.selected_option],
-          }),
-        });
+        const response = await fetch(
+          "https://igcse-backend.onrender.com/generate",
+          {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+            },
+            body: JSON.stringify({
+              topics: this.selected_topics,
+              options: this.option_map[this.selected_option],
+            }),
+          }
+        );
 
         const data = await response.json();
 
@@ -189,6 +208,7 @@ export default {
       this.got_response = false;
       this.failed = false;
       this.show_error_msg = false;
+      this.show_comp2 = false;
       this.component2 = "";
       this.component4 = "";
       this.component6 = "";
