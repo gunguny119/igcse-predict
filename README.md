@@ -5,57 +5,54 @@ This project generates chemistry past paper.
 # How to Add New Topic?
 
 ## Collect IGCSE data
-### 1. Download Pastpapers
+### 1. Download & Extract Text and Pages
 
-1. open `igcse/download.sh` and change the topic name and the code.
-2. Change the components or alts in the code accordingly.
-3. type the following commands to the terminal:
+1. open `igcse/download_pastpaper_pages.sh` and change the subject name, code, and components.
+2. type the following commands to the terminal:
 
 ```
 cd igcse
-sh download.sh
+sh download_pastpaper_pages.sh
 ```
 
-### 2. Extract Text from PDF
+### 2. Extract Questions from Text
 
-change the code name in `pdf2txt.sh`
+The SUBJECT and CODE should change according to your interested subject.
+For COMP, put the component number that contains mcq questions.
 ```
-sh pdf2txt.sh
-```
-
-### 3. Extract pages, long answers and mcqs
-
-```
-python extract_pages.py
-python igcse_extract_la.py
-python igcse_extract_mcq.py
+python igcse_extract_la.py --subject SUBJECT --code CODE --mcq_component COMP
+python igcse_extract_mcq.py --subject SUBJECT --code CODE --mcq_component COMP
 ```
 
-### 4. merge components
+### 3. merge components
 
-1. open `merge_components.ipynb`
-2. change the file names to reflect your current subject .csv.
-3. Run all cells until `Merge with labeled data`
-4. You will end up with `[subject]_all_2016-2021.csv`
+1. Run:
+   ```
+   python merge_components.py --subject SUBJECT --start_year 2016 --end_year 2021
+   ```
+2. You will end up with `[SUBJECT]_all_2016-2021.csv`
 
 ## Collect Train data
 
 ### Collect PMT data
 
-1. Open `download_pmt.py` and edit `topic_list` and the subject name in the link.
-2. open `pmt_extract_la.py` and `pmt_extract_mcq.py` and edit the `topic_list` and `topic_map`.
-```
-python download_pmt.py
-sh pdf2txt_pmt.sh
-python pmt_extract_la.py
-python pmt_extract_mcq.py
-```
+1. Open `download_pmt.py` and edit `TOPIC_LIST` and the `SUBJECT`.
+2. Then:
+    ```
+    python download_pmt.py
+    sh pdf2txt_pmt.sh
+    ```
+3. open `pmt_extract_la.py` and `pmt_extract_mcq.py` and edit the `topic_list` and `topic_map`. Then:
+   ```
+   python pmt_extract_la.py
+   python pmt_extract_mcq.py
+   ```
 
-1. open `pmt_mcq.csv`.
-2. copy all lines except for the first line.
-3. open `pmt_long_answers.csv`.
-4. paste and save.
-5. rename `pmt_long_answers.csv` to `pmt_train.csv`.
+4. Then, run the following:
+    ```
+    python pmt_merge.py --subject SUBJECT
+    ```
+
 
 ## Train Model
 
