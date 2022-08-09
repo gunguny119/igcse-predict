@@ -23,8 +23,17 @@ For COMP, put the component number that contains mcq questions.
 python igcse_extract_la.py --subject SUBJECT --code CODE --mcq_component COMP
 python igcse_extract_mcq.py --subject SUBJECT --code CODE --mcq_component COMP
 ```
+you will get `[SUBJECT]_mcq_2016-2021.csv`, `[SUBJECT]_la_2016-2021.csv`.
 
-### 3. merge components
+### 3. Collect MCQ answers
+
+Manually collect MCQ answers from marking schemes from 2016 to 2021 (or other years).
+
+save it as `[SUBJECT]_mcq_ms_2016-2021.csv`.
+
+For reference, take a look at `chemistry_mcq_ms_20216-2021.csv`.
+
+### 4. merge components
 
 1. Run:
    ```
