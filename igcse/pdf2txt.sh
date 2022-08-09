@@ -1,7 +1,7 @@
-subject=chemistry
-code_id=0620
+subject=$1
+code_id=$2
+components=($3 $4 $5)
 seasons=(m s w)
-components=(2 4 6)
 alts=(1 2 3)
 
  for i in {16..21}; do
