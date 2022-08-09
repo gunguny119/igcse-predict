@@ -5,6 +5,29 @@ This project generates chemistry past paper.
 # How to Add New Topic?
 
 ## Collect IGCSE data
+
+### 0. Check environment
+
+1. Run the following in a terminal, not a vs-code terminal.
+2. use `tf-m1` conda environment.
+
+    ```
+    conda activate tf-m1
+    ```
+
+3. install packages:
+
+    ```
+    pip install pdfminer
+    pip install pdf2image
+    ```
+
+4. go to `igcse-predict` directory
+
+    ```
+    cd path/to/igcse-predict
+    ```
+
 ### 1. Download & Extract Text and Pages
 
 1. open `igcse/download_pastpaper_pages.sh` and change the subject name, code, and components.
