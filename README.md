@@ -76,8 +76,8 @@ For reference, take a look at `chemistry_mcq_ms_20216-2021.csv`.
     ```
 3. open `pmt_extract_la.py` and `pmt_extract_mcq.py` and edit the `topic_list` and `topic_map`. Then:
    ```
-   python pmt_extract_la.py
-   python pmt_extract_mcq.py
+   python pmt_extract_la.py --subject SUBJECT --code CODE
+   python pmt_extract_mcq.py --subject SUBJECT --code CODE
    ```
 
 4. Then, run the following:
