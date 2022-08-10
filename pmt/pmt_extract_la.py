@@ -71,7 +71,7 @@ def main():
     args = parser.parse_args()
     data = []
     for t in topic_list:
-        for qp in glob.glob(f'pastpapers/{t}/*QP.pdf.txt'):
+        for qp in glob.glob(f'pastpapers/{args.subject}/{t}/*QP.pdf.txt'):
             if '(Multiple Choice)' in qp:
                 continue
 
