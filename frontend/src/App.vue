@@ -9,7 +9,7 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
   <div v-show="!clicked && !got_response && !failed">
     <h1>IGCSE Past Paper Generator</h1>
     <h2>Select your studied subjects</h2>
-     <v-select
+    <v-select
       :modelValue="selected_subjects"
       @update:modelValue="selected_subjects = $event"
       :options="subject_list"
@@ -124,38 +124,32 @@ export default {
       selected_topics: [],
       selected_subjects: [],
       topic_list: {
-        Chemistry :[
-        "1 The particulate nature of matter",
-        "2 Experimental techniques",
-        "3 Atoms, elements and compounds",
-        "4 Stoichiometry",
-        "5 Electricity and chemistry",
-        "6 Chemical energetics",
-        "7 Chemical reactions",
-        "8 Acids, bases and salts",
-        "9 The Periodic Table",
-        "10 Metals",
-        "11 Air and water",
-        "12 Sulfur",
-        "13 Carbonates",
-        "14 Organic chemistry",
-      ],
-      Physics : [
-        "1. General Physics",
-        "2. Thermal Physics",
-        "3. Properties of Waves including Light and Sounds",
-        "4. Electricity and Magnetism",
-        "5. Atomic Physics",
-      ],
-      Biology : [
-        "1. Molecule",
-      ]
+        Chemistry: [
+          "1 The particulate nature of matter",
+          "2 Experimental techniques",
+          "3 Atoms, elements and compounds",
+          "4 Stoichiometry",
+          "5 Electricity and chemistry",
+          "6 Chemical energetics",
+          "7 Chemical reactions",
+          "8 Acids, bases and salts",
+          "9 The Periodic Table",
+          "10 Metals",
+          "11 Air and water",
+          "12 Sulfur",
+          "13 Carbonates",
+          "14 Organic chemistry",
+        ],
+        Physics: [
+          "1. General Physics",
+          "2. Thermal Physics",
+          "3. Properties of Waves including Light and Sounds",
+          "4. Electricity and Magnetism",
+          "5. Atomic Physics",
+        ],
+        Biology: ["1. Molecule"],
       },
-      subject_list : [
-        "Chemistry",
-        "Physics",
-        "Biology",
-      ],
+      subject_list: ["Chemistry", "Physics", "Biology"],
       component2: "",
       component4: "",
       component6: "",
