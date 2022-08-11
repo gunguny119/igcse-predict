@@ -111,5 +111,5 @@ For reference, take a look at `chemistry_mcq_ms_20216-2021.csv`.
 
 1. go to igcse-backend folder (in terminal or vs-code)
 2. git push.
-3. go to dashboard.render.com.
+3. go to [render](https://dashboard.render.com).
 4. manual deploy option - deploy last commit.
