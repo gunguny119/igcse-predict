@@ -99,7 +99,7 @@ For reference, take a look at `chemistry_mcq_ms_20216-2021.csv`.
 
 ## Create Database
 1. open inference.ipynb in google colab.
-2. edit the cell under `Run` accordingly.
+2. edit the cell under `Run` accordingly (esp. topic_list, subject, data_path, model_path).
 3. upload your data file (`[subject]_all_2016-2021.csv`)
 4. run all cells.
 5. download `all_data_labeled.csv`
