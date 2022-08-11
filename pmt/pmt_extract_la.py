@@ -1,5 +1,6 @@
 import argparse
 import re
+import os
 import pandas as pd
 import glob
 
@@ -91,6 +92,7 @@ def main():
     df = pd.concat(data)
     df.sort_values(by=['topic'], inplace=True)
 
+    os.makedirs(args.subject, exist_ok=True)
     df.to_csv(f'{args.subject}/pmt_long_answers.csv', index=False)
 
 
