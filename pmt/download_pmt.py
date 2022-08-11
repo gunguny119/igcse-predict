@@ -6,8 +6,8 @@ import requests
 TOPIC_LIST = [
     "general-physics",
     "thermal-physics",
-    "properties-of-waves-including-light-and-sounds",
-    "electricity and Magnetism",
+    "properties-of-waves-light-sound",
+    "electricity-and-magnetism",
     "atomic-physics",
 
 ]
