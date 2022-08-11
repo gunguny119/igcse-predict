@@ -9,19 +9,18 @@ TOPIC_LIST = [
     "properties-of-waves-light-sound",
     "electricity-and-magnetism",
     "atomic-physics",
-
 ]
 SUBJECT = "physics"
 
 #################################################################################
 topic_links = {}
 for t in TOPIC_LIST:
-    os.makedirs(f'{SUBJECT}/{t}', exist_ok=True)
+    os.makedirs(f'pastpapers/{SUBJECT}/{t}', exist_ok=True)
     response = requests.get(
         f"https://www.physicsandmathstutor.com/{SUBJECT}-revision/igcse-cie/{t}/")
-    open(f"{SUBJECT}/{t}/index.html", "wb").write(response.content)
+    open(f"pastpapers/{SUBJECT}/{t}/index.html", "wb").write(response.content)
 
-    with open(f'{SUBJECT}/{t}/index.html') as f:
+    with open(f'pastpapers/{SUBJECT}/{t}/index.html') as f:
         found = False
         finished = False
         links = []
@@ -40,5 +39,5 @@ for t in TOPIC_LIST:
                     if not match.endswith('.pdf'):
                         continue
                     response = requests.get(match)
-                    open(f"{SUBJECT}/{t}/{os.path.basename(match)}",
+                    open(f"pastpapers/{SUBJECT}/{t}/{os.path.basename(match)}",
                          "wb").write(response.content)
