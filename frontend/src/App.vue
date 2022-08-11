@@ -187,6 +187,7 @@ export default {
               "Content-Type": "application/json; charset=utf-8",
             },
             body: JSON.stringify({
+              subject: this.selected_subject,
               topics: this.selected_topics,
               options: this.option_map[this.selected_option],
             }),
