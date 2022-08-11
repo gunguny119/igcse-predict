@@ -7,7 +7,7 @@ parser.add_argument('--subject', type=str, default='chemistry')
 parser.add_argument('--ms', action='store_true')
 args = parser.parse_args()
 
-save_path = 'marking_schemes' if args.ms else 'screenshots'
+save_path = '../marking_schemes' if args.ms else '../screenshots'
 if args.subject != 'chemistry':
     save_path = f'{save_path}/{args.subject}'
 

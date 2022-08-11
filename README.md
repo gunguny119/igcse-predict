@@ -21,6 +21,7 @@ This project generates chemistry past paper.
     pip install pdfminer
     pip install pdf2image
     brew install wget
+    brew install poppler
     ```
 
 4. go to `igcse-predict` directory
