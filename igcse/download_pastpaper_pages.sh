@@ -1,5 +1,5 @@
-subject=chemistry
-code_id=0620
+subject=Physics
+code_id=0625
 components=(2 4 6)
 
 echo downloading...

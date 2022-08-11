@@ -43,12 +43,12 @@ def segment_questions_la(lines, component, subject):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--subject', type=str, default='chemistry')
-    parser.add_argument('--code', type=str, default='0620')
+    parser.add_argument('--subject', type=str, default='physics')
+    parser.add_argument('--code', type=str, default='0625')
     parser.add_argument('--mcq_component', type=str, default='2')
     args = parser.parse_args()
 
-    if args.subject == 'chemistry':
+    if args.subject == 'physics':
         screenshot_dir = 'screenshots'
         ms_dir = 'marking_schemes'
     else:

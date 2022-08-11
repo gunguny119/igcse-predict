@@ -4,22 +4,14 @@ import re
 import requests
 ############################# Change Here ######################################
 TOPIC_LIST = [
-    "particulate-nature-of-matter",
-    "experimental-techniques",
-    "atoms-elements-compounds",
-    "stoichiometry",
-    "electricity-and-chemistry",
-    "chemical-energetics",
-    "chemical-reactions",
-    "acids-bases-salts",
-    "periodic-table",
-    "metals",
-    "air-and-water",
-    "sulfur",
-    "carbonates",
-    "organic-chemistry",
+    "general-physics",
+    "thermal-physics",
+    "properties-of-waves-including-light-and-sounds",
+    "electricity and Magnetism",
+    "atomic-physics",
+
 ]
-SUBJECT = "chemistry"
+SUBJECT = "physics"
 
 #################################################################################
 topic_links = {}
