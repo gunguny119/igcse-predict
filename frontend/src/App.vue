@@ -7,13 +7,19 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 <template>
   <div v-show="!clicked && !got_response && !failed">
-    <h1>IGCSE Chemistry</h1>
+    <h1>IGCSE Past Paper Generator</h1>
+    <h2>Select your studied subjects</h2>
+     <v-select
+      :modelValue="selected_subjects"
+      @update:modelValue="selected_subjects = $event"
+      :options="subject_list"
+    ></v-select>
     <h2>Select your studied topics:</h2>
     <v-select
       :modelValue="selected_topics"
       @update:modelValue="selected_topics = $event"
       multiple
-      :options="topic_list"
+      :options="topic_list[selected_subjects]"
     ></v-select>
     <h2>Also, select your component option:</h2>
     <v-select
@@ -116,7 +122,9 @@ export default {
       failed: false,
       show_comp2: false,
       selected_topics: [],
-      topic_list: [
+      selected_subjects: [],
+      topic_list: {
+        Chemistry :[
         "1 The particulate nature of matter",
         "2 Experimental techniques",
         "3 Atoms, elements and compounds",
@@ -131,6 +139,22 @@ export default {
         "12 Sulfur",
         "13 Carbonates",
         "14 Organic chemistry",
+      ],
+      Physics : [
+        "1. General Physics",
+        "2. Thermal Physics",
+        "3. Properties of Waves including Light and Sounds",
+        "4. Electricity and Magnetism",
+        "5. Atomic Physics",
+      ],
+      Biology : [
+        "1. Molecule",
+      ]
+      },
+      subject_list : [
+        "Chemistry",
+        "Physics",
+        "Biology",
       ],
       component2: "",
       component4: "",
