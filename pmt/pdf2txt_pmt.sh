@@ -1,6 +1,6 @@
 subject=chemistry
 
-for d in "pmt/$subject/*"; do
+for d in "pastpapers/$subject/*"; do
     for f in "$d/*QP.pdf"; do
         # echo $f
         for fname in $f; do

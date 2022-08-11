@@ -10,11 +10,15 @@ firebase_admin.initialize_app(cred, {'storageBucket': 'igcse-predict.appspot.com
 bucket = storage.bucket()
 
 ms = False  # if true, upload marking scheme
+subject = 'chemistry'
 
 if ms:
     folder = 'marking_schemes'
 else:
     folder = 'screenshots'
+
+if subject != 'chemistry':
+    folder = f'{folder}/{subject}'
 
 for year in range(2016, 2022):
     for month in ['march', 'summer', 'winter']:
