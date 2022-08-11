@@ -93,8 +93,9 @@ For reference, take a look at `chemistry_mcq_ms_20216-2021.csv`.
 1. open BertTrain.ipynb in google colab (using github or upload)
 2. upload `pmt_train.csv`.
 3. edit `topics` list.
-4. Run all cells.
-5. model will be saved at google drive `models/` foler.
+4. Update `out_dim` and `subject`.
+5. Run all cells.
+6. model will be saved at google drive `models/` foler.
 
 ## Create Database
 1. open inference.ipynb in google colab.
