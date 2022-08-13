@@ -4,13 +4,28 @@ import re
 import requests
 ############################# Change Here ######################################
 TOPIC_LIST = [
-    "general-physics",
-    "thermal-physics",
-    "properties-of-waves-light-sound",
-    "electricity-and-magnetism",
-    "atomic-physics",
+    "characteristics-and-classification-of-living-organisms",
+    "organisation-of-organism",
+    "movement-in-out-of-cells",
+    "biological-molecules",
+    "enzymes",
+    "plant-nutrition",
+    "human-nutrition",
+    "transport-in-animals",
+    "diseases-and-immunity",
+    "gas-exchange-in-humans",
+    "respiration",
+    "excretion-in-humans",
+    "coordination-and-response",
+    "drugs",
+    "reproduction",
+    "inheritance",
+    "variation-and-selection",
+    "organisms-and-their-environment",
+    "biotechnology-and-genetic-engineering",
+    "human-influences-on-ecosystems",
 ]
-SUBJECT = "physics"
+SUBJECT = "biology"
 
 #################################################################################
 topic_links = {}
