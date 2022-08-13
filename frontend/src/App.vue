@@ -76,9 +76,9 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
           <th>Q No.</th>
           <th>Answer</th>
         </tr>
-        <tr v-for="(answer, index) in ms2">
-          <th>{{ index + 1 }}</th>
-          <td>{{ answer }}</td>
+        <tr v-for="answer in ms2">
+          <th>{{ answer[0] }}</th>
+          <td>{{ answer[1] }}</td>
         </tr>
       </table>
     </div>
