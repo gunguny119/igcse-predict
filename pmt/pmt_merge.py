@@ -16,7 +16,7 @@ with open(f'{args.subject}/pmt_long_answers.csv') as f:
     for line in la:
         filtered_la.append(line.replace('PhysicsAndMathsTutor.com', ''))
 
-la.pop(0)
+filtered_la.pop(0)
 
 data = filtered_mcq + filtered_la
 
