@@ -53,7 +53,7 @@ def main():
     parser.add_argument('--mcq_component', type=str, default='2')
     args = parser.parse_args()
 
-    if args.subject == 'physics':
+    if args.subject == 'chemistry':
         screenshot_dir = 'screenshots'
     else:
         screenshot_dir = f'screenshots/{args.subject}'
