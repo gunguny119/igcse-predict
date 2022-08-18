@@ -113,3 +113,16 @@ For reference, take a look at `chemistry_mcq_ms_20216-2021.csv`.
 2. git push.
 3. go to [render](https://dashboard.render.com).
 4. manual deploy option - deploy last commit.
+
+
+## FAQ
+1. What to do if I mistakenly deleted some screenshots?
+    ```
+    cd igcse
+    python extract_pages.py --subject SUBJEECT
+    ```
+
+    if you need screenshots for marking schemes,
+    ```
+    python extract_pages.py --subject SUBJEECT --ms
+    ```
