@@ -21,12 +21,6 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
       multiple
       :options="topic_list[selected_subjects]"
     ></v-select>
-    <h2>Also, select your component option:</h2>
-    <v-select
-      :modelValue="selected_option"
-      @update:modelValue="selected_option = $event"
-      :options="['CX', 'CY', 'CZ']"
-    ></v-select>
     <p v-show="show_error_msg" style="color: red">
       Please select one or more topics.
     </p>
@@ -173,20 +167,11 @@ export default {
       ms4: "",
       ms6: "",
       grade_thresholds: [180, 170, 160, 150, 140, 130, 120, 110],
-      selected_option: [],
-      option_map: {
-        CX: [21, 41, 61],
-        CY: [22, 42, 62],
-        CZ: [23, 43, 63],
-      },
     };
   },
   methods: {
     onGeneratePaper() {
-      if (
-        this.selected_topics.length == 0 ||
-        this.selected_option.length == 0
-      ) {
+      if (this.selected_topics.length == 0) {
         this.show_error_msg = true;
       } else {
         this.clicked = true;
@@ -205,7 +190,6 @@ export default {
             body: JSON.stringify({
               subject: this.selected_subjects,
               topics: this.selected_topics,
-              options: this.option_map[this.selected_option],
             }),
           }
         );
@@ -248,7 +232,6 @@ export default {
       this.component4 = "";
       this.component6 = "";
       this.selected_topics = [];
-      this.selected_option = [];
     },
   },
 };
