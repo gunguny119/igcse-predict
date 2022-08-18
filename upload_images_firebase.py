@@ -4,13 +4,13 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import storage
 
-cred = credentials.Certificate('backend/igcse-predict-c18eb87031fd.json')
+cred = credentials.Certificate('../igcse-backend/igcse-predict-c18eb87031fd.json')
 firebase_admin.initialize_app(cred, {'storageBucket': 'igcse-predict.appspot.com'})
 
 bucket = storage.bucket()
 
 ms = False  # if true, upload marking scheme
-subject = 'chemistry'
+subject = 'physics'
 
 if ms:
     folder = 'marking_schemes'
@@ -20,7 +20,7 @@ else:
 if subject != 'chemistry':
     folder = f'{folder}/{subject}'
 
-for year in range(2016, 2022):
+for year in range(2019, 2022):
     for month in ['march', 'summer', 'winter']:
         for comp in os.listdir(f'{folder}/{year}/{month}'):
             if not os.path.isdir(f'{folder}/{year}/{month}/{comp}'):
