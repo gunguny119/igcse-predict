@@ -35,8 +35,8 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
   </div>
 
   <div v-show="failed">
-    <h2>We could not generate exam papers with your selected topics.</h2>
-    <h2>Please select another topics.</h2>
+    <h2>We could not generate exam papers with your selected topics/subjects.</h2>
+    <h2>Please select another topics/subjects.</h2>
     <div style="margin-top: 50px">
       <button class="generate-button" @click="reset">Retry</button>
     </div>
