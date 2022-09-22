@@ -184,7 +184,7 @@ export default {
     sendRequest: async function () {
       try {
         const response = await fetch(
-          "https://dev-igcse-backend-gunguny119.endpoint.ainize.ai/generate",
+          "https://igcse-backend.onrender.com/generate",
           {
             method: "post",
             headers: {
