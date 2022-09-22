@@ -35,7 +35,9 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
   </div>
 
   <div v-show="failed">
-    <h2>We could not generate exam papers with your selected topics/subjects.</h2>
+    <h2>
+      We could not generate exam papers with your selected topics/subjects.
+    </h2>
     <h2>Please select another topics/subjects.</h2>
     <div style="margin-top: 50px">
       <button class="generate-button" @click="reset">Retry</button>
@@ -182,7 +184,7 @@ export default {
     sendRequest: async function () {
       try {
         const response = await fetch(
-          "https://igcse-backend.onrender.com/generate",
+          "https://dev-igcse-backend-gunguny119.endpoint.ainize.ai/generate",
           {
             method: "post",
             headers: {
