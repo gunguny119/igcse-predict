@@ -177,6 +177,7 @@ export default {
         this.clicked = true;
         this.sendRequest();
       }
+      
     },
     sendRequest: async function () {
       try {
